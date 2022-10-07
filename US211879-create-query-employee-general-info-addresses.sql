@@ -1,7 +1,7 @@
 USE Employee;
 GO
 
--- Make Pete homeless, so we can show off the LEFT JOIN
+-- Make Pete homeless
 UPDATE dbo.GeneralInfo
 SET
     Address_ID = NULL
@@ -11,7 +11,7 @@ WHERE
 ;
 GO
 
--- All employees, plus address if they have one.
+-- All employees with an address.
 SELECT
     gi.FirstName
     , gi.MiddleName
@@ -25,7 +25,7 @@ SELECT
     , a.Zip
 FROM
     dbo.GeneralInfo gi
-    LEFT JOIN dbo."Address" a
+    INNER JOIN dbo."Address" a
         ON gi.Address_ID = a.Address_ID
 ;
 GO
