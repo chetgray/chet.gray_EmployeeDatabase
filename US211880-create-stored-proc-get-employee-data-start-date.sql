@@ -1,7 +1,7 @@
 USE Employee;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.GetEmployeeDataByStartDateAfter
+CREATE OR ALTER PROCEDURE dbo.GetEmployeeDataByStartDateOnOrAfter
     @StartDate date
 AS
 SELECT
@@ -15,9 +15,9 @@ SELECT
 FROM
     dbo.GeneralInfo
 WHERE
-    @StartDate < CAST("Employment Start Date" as date)
+    @StartDate <= CAST("Employment Start Date" as date)
 ;
 GO
 
-EXEC dbo.GetEmployeeDataByStartDateAfter 'Oct 11, 2005';
+EXEC dbo.GetEmployeeDataByStartDateOnOrAfter '2005-08-03';
 GO
