@@ -15,21 +15,33 @@ CREATE OR ALTER PROCEDURE dbo.AddEmployee
 AS
 DECLARE @Address_ID int;
 
-INSERT INTO dbo.Address (
-    "Street Address"
-    , City
-    , "State"
-    , Zip
-)
-VALUES (
-    @StreetAddress
-    , @City
-    , @State
-    , @Zip
-);
-        
-SET @Address_ID = SCOPE_IDENTITY();
+SELECT TOP 1 @Address_ID = a.Address_ID
+FROM dbo.Address AS a
+WHERE
+    a."Street Address" = @StreetAddress
+    AND a.City = @City
+    AND a."State" = @State
+    AND a.Zip = @Zip
+;
     
+IF @Address_ID IS NULL
+BEGIN
+    INSERT INTO dbo.Address (
+        "Street Address"
+        , City
+        , "State"
+        , Zip
+    )
+    VALUES (
+        @StreetAddress
+        , @City
+        , @State
+        , @Zip
+    );
+        
+    SET @Address_ID = SCOPE_IDENTITY();
+END
+
 INSERT INTO dbo.GeneralInfo (
     FirstName
     , MiddleName
